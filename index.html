@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Te amo panecito 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      font-family: 'Press Start 2P', cursive;
+      overflow: hidden;
+    }
+
+    .start-screen {
+      position: fixed;
+      z-index: 20;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: black;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .start-screen button {
+      font-size: 16px;
+      padding: 10px 20px;
+      margin-top: 20px;
+      background: #ff69b4;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ff69b4;
+    }
+
+    .center-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 16px;
+      color: #ff5050;
+      text-shadow: 0 0 8px red, 0 0 16px #ff0000;
+      padding: 20px;
+      border: 3px solid red;
+      border-radius: 10px;
+      animation: pulse 2s infinite;
+      z-index: 10;
+      text-align: center;
+    }
+
+    @keyframes pulse {
+      0% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.1); }
+      100% { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    .word {
+      position: absolute;
+      color: white;
+      font-size: 14px;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="start-screen" id="startScreen">
+    <h1>Hola mi amor 💖</h1>
+    <p>Tengo algo para ti...</p>
+    <button onclick="startLove()">Haz clic para comenzar</button>
+  </div>
+
+  <div class="center-text" id="mainText" style="display: none;">te amo panecito</div>
+
+  <audio id="bgMusic" loop>
+    <source src="assets/cancion.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio.
+  </audio>
+
+  <script>
+    const words = ["guapa", "chula", "hermosa", "mi niña", "princesa", "<3", "💖", "⭐", "✨"];
+    const colors = ["#ff69b4", "#87cefa", "#fff", "#ffd700", "#00ffff", "#ffb6c1", "#f0f"];
+
+    function createWord() {
+      const word = document.createElement("div");
+      word.className = "word";
+      word.innerText = words[Math.floor(Math.random() * words.length)];
+      word.style.left = Math.random() * 100 + "vw";
+      word.style.top = "-2vh";
+      word.style.color = colors[Math.floor(Math.random() * colors.length)];
+      word.style.fontSize = Math.random() * 10 + 14 + "px";
+
+      document.body.appendChild(word);
+
+      const duration = Math.random() * 5 + 5;
+      word.animate([
+        { transform: "translateY(0)", opacity: 1 },
+        { transform: `translateY(${window.innerHeight}px)`, opacity: 0.3 }
+      ], {
+        duration: duration * 1000,
+        easing: "linear"
+      });
+
+      setTimeout(() => word.remove(), duration * 1000);
+    }
+
+    function startLove() {
+      document.getElementById("startScreen").style.display = "none";
+      document.getElementById("mainText").style.display = "block";
+      document.getElementById("bgMusic").play();
+      setInterval(createWord, 200);
+    }
+  </script>
+</body>
+</html>
